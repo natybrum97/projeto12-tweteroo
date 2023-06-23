@@ -1,16 +1,27 @@
 import express from "express";
+import cors from "cors";
 
 const app = express();
 
+app.use(cors());
+app.use(express.json());
 
+let VarAvatar;
 let ArrayDeUsuarios = [];
 let ArrayDeTweets = [];
 
+app.get("/tweets", (req, res) => {
+    res.send(ArrayDeTweets.slice(-10));
+})
+
 app.post("/sign-up", (req, res) => {
+
 
     const { username, avatar } = req.body;
 
-    const novoUsuario = {username, avatar};
+    VarAvatar = avatar;
+
+    const novoUsuario = {username, avatar: VarAvatar};
 
     ArrayDeUsuarios.push(novoUsuario);
 
@@ -23,7 +34,7 @@ app.post("/tweets", (req, res) => {
 
     const { username, tweet } = req.body;
 
-    const novoTweet = {username, tweet};
+    const novoTweet = {username, avatar: VarAvatar, tweet};
 
     ArrayDeTweets.push(novoTweet);
 
