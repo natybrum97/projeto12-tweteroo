@@ -14,6 +14,12 @@ app.get("/tweets", (req, res) => {
     res.send(ArrayDeTweets.slice(-10));
 })
 
+app.get("/tweets/:username", (req, res) => {
+    const { username } = req.params;
+    const tweetsPorUser = ArrayDeTweets.filter(element => element.username === username.toString())
+    res.send(tweetsPorUser);
+})
+
 app.post("/sign-up", (req, res) => {
 
 
