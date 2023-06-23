@@ -23,9 +23,13 @@ app.post("/sign-up", (req, res) => {
 
     const novoUsuario = {username, avatar: VarAvatar};
 
+    if(!username || !avatar || typeof username !== "string" || typeof avatar !== "string"){
+        return res.status(400).send("Todos os campos são obrigatórios!");
+    }
+
     ArrayDeUsuarios.push(novoUsuario);
 
-    res.send("OK");
+    res.status(201).send("OK");
 
 })
 
@@ -38,11 +42,15 @@ app.post("/tweets", (req, res) => {
 
     const { username, tweet } = req.body;
 
+    if(!username || !tweet || typeof username !== "string" || typeof tweet !== "string"){
+        return res.status(400).send("Todos os campos são obrigatórios!");
+    }
+
     const novoTweet = {username, avatar: VarAvatar, tweet};
 
     ArrayDeTweets.push(novoTweet);
 
-    res.send("OK");
+    res.status(201).send("OK");
 
 })
 
