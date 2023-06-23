@@ -32,6 +32,10 @@ app.post("/sign-up", (req, res) => {
 
 app.post("/tweets", (req, res) => {
 
+    if(ArrayDeUsuarios.length === 0){
+        return res.status(401).send("Unauthorized");
+    }
+
     const { username, tweet } = req.body;
 
     const novoTweet = {username, avatar: VarAvatar, tweet};
