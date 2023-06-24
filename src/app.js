@@ -46,7 +46,9 @@ app.post("/tweets", (req, res) => {
         return res.status(401).send("Unauthorized");
     }
 
-    const { username, tweet } = req.body;
+    const { tweet } = req.body;
+    const { user } = req.headers;
+    const username = user;
 
     if(!username || !tweet || typeof username !== "string" || typeof tweet !== "string"){
         return res.status(400).send("Todos os campos são obrigatórios!");
