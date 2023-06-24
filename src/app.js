@@ -11,6 +11,16 @@ let ArrayDeUsuarios = [];
 let ArrayDeTweets = [];
 
 app.get("/tweets", (req, res) => {
+    const { page } = req.query;
+
+    if(page <= 0){
+        return res.status(400).send("Informe uma página válida!");
+    }
+    
+    if(page > 0){
+        res.send(ArrayDeTweets.slice((-page*10 - 9),(-page*10)));
+    }
+
     res.send(ArrayDeTweets.slice(-10));
 })
 
