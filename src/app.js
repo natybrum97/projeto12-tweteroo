@@ -12,17 +12,22 @@ let ArrayDeTweets = [];
 
 app.get("/tweets", (req, res) => {
     const { page } = req.query;
-
-    if(page <= 0){
-        return res.status(400).send("Informe uma página válida!");
+  
+    if (!page || page <= 0 || isNaN(page)) {
+      return res.status(400).send("Informe uma página válida!");
     }
-    
-    if(page > 0){
-        res.send(ArrayDeTweets.slice((-page*10 - 9),(-page*10)));
+  
+    const pageNumber = parseInt(page);
+  
+    if (pageNumber === 1) {
+        res.status(200).send(ArrayDeTweets.slice(-10));
+    } else {
+      const startIndex = -pageNumber * 10;
+      const endIndex = startIndex + 10;
+      res.send(ArrayDeTweets.slice(startIndex, endIndex));
     }
-
-    res.send(ArrayDeTweets.slice(-10));
-})
+  });
+  
 
 app.get("/tweets/:username", (req, res) => {
     const { username } = req.params;
