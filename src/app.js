@@ -11,7 +11,17 @@ let ArrayDeUsuarios = [];
 let ArrayDeTweets = [];
 
 app.get("/tweets", (req, res) => {
-    res.send(ArrayDeTweets.slice(-10));
+    const page = parseInt(req.query.page);
+    
+    if (page < 1 ) {
+        res.status(400).send('Informe uma página válida!');
+        return;
+    }
+    const tweetsPorPagina = 10;
+    const startIndex = page ? (page - 1) * tweetsPorPagina : tweets.length - tweetsPorPagina;
+    const endIndex = page ? page * tweetsPorPagina : tweets.length;
+    
+    res.send(ArrayDeTweets.slice(startIndex, endIndex));
 })
 
 app.get("/tweets/:username", (req, res) => {
